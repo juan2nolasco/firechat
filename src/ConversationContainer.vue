@@ -29,7 +29,17 @@
         },
 
         created () {
+            this.$store.state.db.collection('conversations').doc(this.id).onSnapshot(convo => {
+                let source = convo.metadata.hasPendingWrites ? 'Local' : 'Server'
 
+                console.log(`Source ${source}`)
+
+                if(convo && convo.data()) {
+                    convo.data().messages.forEach(message => this.$store.commit('conversations/ADD_MESSAGE', {
+                        conversationId: this.id, message
+                    }))
+                }
+            })
         },
 
         components: {

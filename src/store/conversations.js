@@ -15,6 +15,12 @@ const mutations = {
             [conversation.id]: {users: data.users, created: data.created, messages: [] }
         }
         state.allIds.push(conversation.id)
+    },
+    ADD_MESSAGE (state, { conversationId, message }){
+        if(!state.allMsgIds.includes(message.id)) {
+            state.all[conversationId].messages.push(message)
+            state.allMsgIds.push(message.id)
+        }
     }
 }
 
